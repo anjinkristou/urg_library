@@ -970,6 +970,7 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
         // \~english If the number of scans is over 99, work in infinite scanning mode
         urg->specified_scan_times = 0;
     }
+        urg->is_sending = URG_TRUE;
 
     if (urg->scanning_remain_times == 1) {
         // \~japanese  レーザ発光を指示
@@ -988,7 +989,6 @@ static int send_distance_command(urg_t *urg, int scan_times, int skip_scan,
                               urg->scanning_last_step + front_index,
                               urg->scanning_skip_step,
                               skip_scan, urg->specified_scan_times);
-        urg->is_sending = URG_TRUE;
     }
 
     n = connection_write(&urg->connection, buffer, write_size);

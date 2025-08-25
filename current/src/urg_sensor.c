@@ -1275,7 +1275,7 @@ int urg_sleep(urg_t *urg)
         return qtResult;
     }
 
-    int ret = scip_response(urg, "%SL\n", sl_expected, MAX_TIMEOUT,
+    int ret = scip_response(urg, "%SL\n", sl_expected, 1000,
                   receive_buffer, RECEIVE_BUFFER_SIZE);
     if (ret < 0) {
         return ret;

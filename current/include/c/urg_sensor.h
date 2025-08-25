@@ -990,7 +990,7 @@ extern "C" {
       \~
       \see urg_wakeup()
     */
-    extern void urg_sleep(urg_t *urg);
+    extern int urg_sleep(urg_t *urg);
 
 
     /*!

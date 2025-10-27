@@ -1263,18 +1263,24 @@ int urg_reboot(urg_t *urg)
 }
 
 
-void urg_sleep(urg_t *urg)
+int urg_sleep(urg_t *urg)
 {
     enum { RECEIVE_BUFFER_SIZE = 4 };
     int sl_expected[] = { 0, EXPECTED_END };
-    char receive_buffer[RECEIVE_BUFFER_SIZE];
+    char receive_buffer[RECEIVE_BUFFER_SIZE + 1];
 
-    if (urg_stop_measurement(urg) != URG_NO_ERROR) {
-        return;
+    int qtResult = urg_stop_measurement(urg);
+
+    if (qtResult != URG_NO_ERROR) {
+        return qtResult;
     }
 
-    scip_response(urg, "%SL\n", sl_expected, MAX_TIMEOUT,
+    int ret = scip_response(urg, "%SL\n", sl_expected, 1000,
                   receive_buffer, RECEIVE_BUFFER_SIZE);
+    if (ret < 0) {
+        return ret;
+    }
+    return 0;
 }
 
 
